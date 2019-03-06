@@ -61,7 +61,6 @@ class CustomViewController: UICollectionViewController,UICollectionViewDelegateF
         navigationItem.title = self.canadaViewModel?.title
         navigationController?.navigationBar.backgroundColor = .yellow
         navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barTintColor = UIColor.rgb(r: 50, g: 199, b: 242)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

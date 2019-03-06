@@ -20,7 +20,6 @@
 		E8F8FF5D222E408600B2CE06 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FF5C222E408600B2CE06 /* APIManager.swift */; };
 		E8F8FF99222EBAE100B2CE06 /* CanadaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FF98222EBAE100B2CE06 /* CanadaViewModel.swift */; };
 		E8F8FF9B222EBC8900B2CE06 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FF9A222EBC8900B2CE06 /* CustomCell.swift */; };
-		E8F8FF9E222EC2DB00B2CE06 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FF9D222EC2DB00B2CE06 /* ColorExtension.swift */; };
 		E8F8FFA0222F093D00B2CE06 /* CanadaModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FF9F222F093D00B2CE06 /* CanadaModelTests.swift */; };
 		E8F8FFA2222F522400B2CE06 /* APIManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FFA1222F522400B2CE06 /* APIManagerTests.swift */; };
 		E8F8FFA4222F5BAF00B2CE06 /* CanadaViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FFA3222F5BAF00B2CE06 /* CanadaViewModelTests.swift */; };
@@ -66,7 +65,6 @@
 		E8F8FF5C222E408600B2CE06 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		E8F8FF98222EBAE100B2CE06 /* CanadaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanadaViewModel.swift; sourceTree = "<group>"; };
 		E8F8FF9A222EBC8900B2CE06 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
-		E8F8FF9D222EC2DB00B2CE06 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		E8F8FF9F222F093D00B2CE06 /* CanadaModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanadaModelTests.swift; sourceTree = "<group>"; };
 		E8F8FFA1222F522400B2CE06 /* APIManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManagerTests.swift; sourceTree = "<group>"; };
 		E8F8FFA3222F5BAF00B2CE06 /* CanadaViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanadaViewModelTests.swift; sourceTree = "<group>"; };
@@ -153,7 +151,6 @@
 		E8F8FF26222E3E8D00B2CE06 /* CanadaSpecs */ = {
 			isa = PBXGroup;
 			children = (
-				E8F8FF9C222EC2B300B2CE06 /* Extensions */,
 				E8F8FF59222E3EE100B2CE06 /* Service */,
 				E8F8FF58222E3ED000B2CE06 /* Controller */,
 				E8F8FF57222E3EC200B2CE06 /* View */,
@@ -227,14 +224,6 @@
 				E8F8FF5C222E408600B2CE06 /* APIManager.swift */,
 			);
 			path = Service;
-			sourceTree = "<group>";
-		};
-		E8F8FF9C222EC2B300B2CE06 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				E8F8FF9D222EC2DB00B2CE06 /* ColorExtension.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -470,7 +459,6 @@
 				E8F8FF5B222E3F2500B2CE06 /* CanadaModel.swift in Sources */,
 				E8F8FF99222EBAE100B2CE06 /* CanadaViewModel.swift in Sources */,
 				E8F8FF9B222EBC8900B2CE06 /* CustomCell.swift in Sources */,
-				E8F8FF9E222EC2DB00B2CE06 /* ColorExtension.swift in Sources */,
 				E8F8FF28222E3E8D00B2CE06 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
