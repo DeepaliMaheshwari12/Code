@@ -63,8 +63,16 @@ class APIManager {
                         
                          let data = try Data(contentsOf: URL(fileURLWithPath: plistPath), options: [])
 
-                        let jsonResult = try JSONDecoder().decode(CanadaModel.self, from: data)
+                        var jsonResult = try JSONDecoder().decode(CanadaModel.self, from: data)
                         //Has to do compact map to remove nil values
+                        let itemsNotNil = jsonResult.rows.compactMap { (itemDesc: CanadaInfo) -> CanadaInfo? in
+                           
+                            if( itemDesc.title == nil && itemDesc.description == nil && itemDesc.imageHref == nil) {
+                                return nil
+                            }
+                                return itemDesc
+                        }
+                        jsonResult.rows = itemsNotNil
                         completion(jsonResult,nil)
                         
                         }
