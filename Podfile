@@ -1,7 +1,7 @@
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
-target 'CanadaSpecs' do
+target 'AcrossGeography' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
@@ -10,14 +10,11 @@ target 'CanadaSpecs' do
         pod 'AlamofireImage', '~> 3.5'
 	pod 'SwiftLint'
 
-  target 'CanadaSpecsTests' do
+  target 'AcrossGeographyTests' do
     inherit! :search_paths
     # Pods for testing
   end
 
-  target 'CanadaSpecsUITests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+
 
 end

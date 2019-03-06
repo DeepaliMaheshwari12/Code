@@ -1,6 +1,6 @@
 //
 //  APIManagerTests.swift
-//  CanadaSpecsTests
+//  AcrossGeographyTests
 //
 //  Created by GtoMobility on 06/03/19.
 //  Copyright © 2019 GtoMobility. All rights reserved.
@@ -8,7 +8,7 @@
 
 import XCTest
 import Alamofire
-@testable import CanadaSpecs
+@testable import AcrossGeography
 
 class APIManagerTests: XCTestCase {
         func testDataNetworkRequest() {

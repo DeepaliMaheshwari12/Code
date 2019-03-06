@@ -1,6 +1,6 @@
 //
-//  CanadaModel.swift
-//  CanadaSpecs
+//  DataModel.swift
+//  AcrossGeography
 //
 //  Created by GtoMobility on 05/03/19.
 //  Copyright © 2019 GtoMobility. All rights reserved.
@@ -8,19 +8,19 @@
 
 import Foundation
 
-struct CanadaModel: Codable {
+struct DataModel: Codable {
     var title: String
-    var rows: [CanadaInfo]
+    var rows: [DataModelInfoDetails]
 }
 
-struct CanadaInfo: Codable {
+struct DataModelInfoDetails: Codable {
     var title: String?
     var description: String?
     var imageHref: String?
 }
 
 // Created extension so that we can have default memberwise initializer
-extension CanadaInfo {
+extension DataModelInfoDetails {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         let title: String? = try values.decodeIfPresent(String.self, forKey: .title)
@@ -30,8 +30,8 @@ extension CanadaInfo {
         self.description = description
         self.imageHref = imageHref
     }
-    init?(canadaInfo: CanadaInfo) {
-        guard let title = canadaInfo.title, let description = canadaInfo.description, let imageHref = canadaInfo.imageHref else {
+    init?(dataModelInfo: DataModelInfoDetails) {
+        guard let title = dataModelInfo.title, let description = dataModelInfo.description, let imageHref = dataModelInfo.imageHref else {
             return
         }
         self.title = title

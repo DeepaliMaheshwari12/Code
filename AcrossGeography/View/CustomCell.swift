@@ -1,6 +1,6 @@
 //
 //  CustomCell.swift
-//  CanadaSpecs
+//  AcrossGeography
 //
 //  Created by GtoMobility on 05/03/19.
 //  Copyright © 2019 GtoMobility. All rights reserved.

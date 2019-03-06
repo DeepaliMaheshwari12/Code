@@ -9,7 +9,7 @@
 import UIKit
 
 class CustomViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    var canadaViewModel: CanadaModel?
+    var viewModel: DataModel?
     let apiManager = APIManager()
     var refreshCtrl: UIRefreshControl!
     var cache: NSCache<AnyObject, AnyObject>!
@@ -41,7 +41,7 @@ class CustomViewController: UICollectionViewController, UICollectionViewDelegate
                 print("Failed to fetch courses:", error)
                 return
             }
-            self!.canadaViewModel = responseData
+            self!.viewModel = responseData
             DispatchQueue.main.async {
                 self?.setupNavBar()
                 self?.collectionView.reloadData()
@@ -49,17 +49,17 @@ class CustomViewController: UICollectionViewController, UICollectionViewDelegate
         }
     }
     fileprivate func setupNavBar() {
-        navigationItem.title = self.canadaViewModel?.title
+        navigationItem.title = self.viewModel?.title
         navigationController?.navigationBar.backgroundColor = .yellow
         navigationController?.navigationBar.isTranslucent = false
     }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return canadaViewModel?.rows.count ?? 0
+        return viewModel?.rows.count ?? 0
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: customCellIdentifier, for: indexPath) as? CustomCell
-        customCell?.label.text = canadaViewModel?.rows[indexPath.row].title ?? ""
-        customCell?.detailLabel.text = canadaViewModel?.rows[indexPath.row].description ?? ""
+        customCell?.label.text = viewModel?.rows[indexPath.row].title ?? ""
+        customCell?.detailLabel.text = viewModel?.rows[indexPath.row].description ?? ""
         customCell?.imageView.image = nil
         if self.cache.object(forKey: (indexPath as NSIndexPath).row as AnyObject) != nil {
             // 2
@@ -68,7 +68,7 @@ class CustomViewController: UICollectionViewController, UICollectionViewDelegate
             customCell?.imageView.image = self.cache.object(forKey: (indexPath as NSIndexPath).row as AnyObject) as? UIImage
         } else {
             // 3
-            let imageURL = canadaViewModel?.rows[indexPath.row].imageHref ?? ""
+            let imageURL = viewModel?.rows[indexPath.row].imageHref ?? ""
             let url: URL! = URL(string: imageURL)
             guard url != nil else {
                 return customCell!

@@ -1,6 +1,6 @@
 //
 //  APIManager.swift
-//  CanadaSpecs
+//  AcrossGeography
 //
 //  Created by GtoMobility on 05/03/19.
 //  Copyright © 2019 GtoMobility. All rights reserved.
@@ -24,7 +24,7 @@ class APIManager {
         }
     }
     // Downloading JSON file from server and reading the contents of file
-    func makeRequest(completion:@escaping (CanadaModel?, Error?) -> Void) {
+    func makeRequest(completion:@escaping (DataModel?, Error?) -> Void) {
 
         let destination: DownloadRequest.DownloadFileDestination = { _, _ in
             let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -54,9 +54,9 @@ class APIManager {
 
                     do {
                          let data = try Data(contentsOf: URL(fileURLWithPath: plistPath), options: [])
-                        var jsonResult = try JSONDecoder().decode(CanadaModel.self, from: data)
+                        var jsonResult = try JSONDecoder().decode(DataModel.self, from: data)
                         //Has to do compact map to remove nil values
-                        let itemsNotNil = jsonResult.rows.compactMap { (itemDesc: CanadaInfo) -> CanadaInfo? in
+                        let itemsNotNil = jsonResult.rows.compactMap { (itemDesc: DataModelInfoDetails) -> DataModelInfoDetails? in
                             if itemDesc.title == nil && itemDesc.description == nil && itemDesc.imageHref == nil {
                                 return nil
                             }
