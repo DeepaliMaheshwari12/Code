@@ -108,6 +108,20 @@ class CustomViewController: UICollectionViewController,UICollectionViewDelegateF
         return customCell
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad)
+        {
+            let padding: CGFloat =  50
+            let collectionViewSize = collectionView.frame.size.width - padding
+        
+            return CGSize(width: collectionViewSize/2, height: collectionViewSize/2)
+        }
+        
+        
+        return collectionView.frame.size
+
+    }
+    
     // Orientation Methods
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         layout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: 10)
