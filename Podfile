@@ -8,6 +8,7 @@ target 'CanadaSpecs' do
   # Pods for CanadaSpecs
         pod 'Alamofire', '~> 4.0'
         pod 'AlamofireImage', '~> 3.5'
+	pod 'SwiftLint'
 
   target 'CanadaSpecsTests' do
     inherit! :search_paths
