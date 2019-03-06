@@ -10,14 +10,9 @@ import XCTest
 @testable import CanadaSpecs
 
 class CanadaViewModelTests: XCTestCase {
-    
     func testViewModelIsValid() {
-        
         let canadaInfo = CanadaInfo(title: "Title", description: "description", imageHref: "https://abc.com")
         let viewModel = CanadaViewModel(info: canadaInfo)
-        
         XCTAssertFalse(viewModel.title == "ValidTitle")
-        
     }
-    
 }

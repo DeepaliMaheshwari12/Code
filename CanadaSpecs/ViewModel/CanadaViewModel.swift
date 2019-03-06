@@ -12,11 +12,8 @@ class CanadaViewModel {
     let title: String
     let detailDescripion: String
     let imageURL: String
-   
     // Dependency Injection (DI)
-    
-    init(info: CanadaInfo)
-    {
+    init(info: CanadaInfo) {
         self.title = info.title ?? ""
         self.detailDescripion = info.description ?? ""
         self.imageURL = info.imageHref ?? ""

@@ -15,7 +15,6 @@
 		E8F8FF2F222E3E8F00B2CE06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8F8FF2E222E3E8F00B2CE06 /* Assets.xcassets */; };
 		E8F8FF32222E3E8F00B2CE06 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8F8FF30222E3E8F00B2CE06 /* LaunchScreen.storyboard */; };
 		E8F8FF3D222E3E8F00B2CE06 /* CanadaSpecsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FF3C222E3E8F00B2CE06 /* CanadaSpecsTests.swift */; };
-		E8F8FF48222E3E8F00B2CE06 /* CanadaSpecsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FF47222E3E8F00B2CE06 /* CanadaSpecsUITests.swift */; };
 		E8F8FF5B222E3F2500B2CE06 /* CanadaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FF5A222E3F2500B2CE06 /* CanadaModel.swift */; };
 		E8F8FF5D222E408600B2CE06 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FF5C222E408600B2CE06 /* APIManager.swift */; };
 		E8F8FF99222EBAE100B2CE06 /* CanadaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FF98222EBAE100B2CE06 /* CanadaViewModel.swift */; };
@@ -59,8 +58,6 @@
 		E8F8FF3C222E3E8F00B2CE06 /* CanadaSpecsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanadaSpecsTests.swift; sourceTree = "<group>"; };
 		E8F8FF3E222E3E8F00B2CE06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8F8FF43222E3E8F00B2CE06 /* CanadaSpecsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CanadaSpecsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E8F8FF47222E3E8F00B2CE06 /* CanadaSpecsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanadaSpecsUITests.swift; sourceTree = "<group>"; };
-		E8F8FF49222E3E8F00B2CE06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8F8FF5A222E3F2500B2CE06 /* CanadaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanadaModel.swift; sourceTree = "<group>"; };
 		E8F8FF5C222E408600B2CE06 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		E8F8FF98222EBAE100B2CE06 /* CanadaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanadaViewModel.swift; sourceTree = "<group>"; };
@@ -131,7 +128,6 @@
 			children = (
 				E8F8FF26222E3E8D00B2CE06 /* CanadaSpecs */,
 				E8F8FF3B222E3E8F00B2CE06 /* CanadaSpecsTests */,
-				E8F8FF46222E3E8F00B2CE06 /* CanadaSpecsUITests */,
 				E8F8FF25222E3E8D00B2CE06 /* Products */,
 				6C37E909265AF185BC00605B /* Pods */,
 				5357A9BDDD8768CD6826B2C1 /* Frameworks */,
@@ -174,15 +170,6 @@
 				E8F8FFA3222F5BAF00B2CE06 /* CanadaViewModelTests.swift */,
 			);
 			path = CanadaSpecsTests;
-			sourceTree = "<group>";
-		};
-		E8F8FF46222E3E8F00B2CE06 /* CanadaSpecsUITests */ = {
-			isa = PBXGroup;
-			children = (
-				E8F8FF47222E3E8F00B2CE06 /* CanadaSpecsUITests.swift */,
-				E8F8FF49222E3E8F00B2CE06 /* Info.plist */,
-			);
-			path = CanadaSpecsUITests;
 			sourceTree = "<group>";
 		};
 		E8F8FF55222E3E9900B2CE06 /* Model */ = {
@@ -233,6 +220,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E8F8FF4C222E3E8F00B2CE06 /* Build configuration list for PBXNativeTarget "CanadaSpecs" */;
 			buildPhases = (
+				E8FB09B5222FC74F00CF0F9B /* ShellScript */,
 				BAD4A27792A427CF53D42C50 /* [CP] Check Pods Manifest.lock */,
 				E8F8FF20222E3E8D00B2CE06 /* Sources */,
 				E8F8FF21222E3E8D00B2CE06 /* Frameworks */,
@@ -447,6 +435,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CanadaSpecs/Pods-CanadaSpecs-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E8FB09B5222FC74F00CF0F9B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -478,7 +483,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8F8FF48222E3E8F00B2CE06 /* CanadaSpecsUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
