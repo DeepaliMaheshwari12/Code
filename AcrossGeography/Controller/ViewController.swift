@@ -25,12 +25,12 @@ class CustomViewController: UICollectionViewController, UICollectionViewDelegate
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         // Creating the refresh functionality
-        self.refreshCtrl = UIRefreshControl()
-        self.refreshCtrl.addTarget(self, action: #selector(fetchData), for: .valueChanged)
-        self.collectionView.backgroundColor = UIColor.blue
+        refreshCtrl = UIRefreshControl()
+        refreshCtrl.addTarget(self, action: #selector(fetchData), for: .valueChanged)
+        collectionView.backgroundColor = UIColor.blue
         collectionView.register(CustomCell.self, forCellWithReuseIdentifier: customCellIdentifier)
         collectionView?.collectionViewLayout = layout
-        self.cache = NSCache()
+        cache = NSCache()
         // Fetching the data on launch
         fetchData()
 
@@ -49,7 +49,7 @@ class CustomViewController: UICollectionViewController, UICollectionViewDelegate
         }
     }
     fileprivate func setupNavBar() {
-        navigationItem.title = self.viewModel?.title
+        navigationItem.title = viewModel?.title
         navigationController?.navigationBar.backgroundColor = .yellow
         navigationController?.navigationBar.isTranslucent = false
     }
@@ -61,11 +61,11 @@ class CustomViewController: UICollectionViewController, UICollectionViewDelegate
         customCell?.label.text = viewModel?.rows[indexPath.row].title ?? ""
         customCell?.detailLabel.text = viewModel?.rows[indexPath.row].description ?? ""
         customCell?.imageView.image = nil
-        if self.cache.object(forKey: (indexPath as NSIndexPath).row as AnyObject) != nil {
+        if cache.object(forKey: (indexPath as NSIndexPath).row as AnyObject) != nil {
             // 2
             // Use cache
             print("Cached image used, no need to download it")
-            customCell?.imageView.image = self.cache.object(forKey: (indexPath as NSIndexPath).row as AnyObject) as? UIImage
+            customCell?.imageView.image = cache.object(forKey: (indexPath as NSIndexPath).row as AnyObject) as? UIImage
         } else {
             // 3
             let imageURL = viewModel?.rows[indexPath.row].imageHref ?? ""

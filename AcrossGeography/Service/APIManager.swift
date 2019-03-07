@@ -50,7 +50,7 @@ class APIManager {
                         print(string)
                         let data = string.data(using: .utf8)!
                         var jsonResult = try JSONDecoder().decode(DataModel.self, from: data)
-                        //Has to do compact map to remove nil values
+                        //compact map to remove nil values
                         let itemsNotNil = jsonResult.rows.compactMap { (itemDesc: DataModelInfoDetails) -> DataModelInfoDetails? in
                             if itemDesc.title == nil && itemDesc.description == nil && itemDesc.imageHref == nil {
                                 return nil
