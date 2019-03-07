@@ -113,7 +113,6 @@
 		E8F8FF1B222E3E8D00B2CE06 = {
 			isa = PBXGroup;
 			children = (
-				E8B5EA4B2230F8930092050C /* Helpers */,
 				E8F8FF26222E3E8D00B2CE06 /* AcrossGeography */,
 				E8F8FF3B222E3E8F00B2CE06 /* AcrossGeographyTests */,
 				E8F8FF25222E3E8D00B2CE06 /* Products */,
@@ -134,6 +133,7 @@
 		E8F8FF26222E3E8D00B2CE06 /* AcrossGeography */ = {
 			isa = PBXGroup;
 			children = (
+				E8B5EA4B2230F8930092050C /* Helpers */,
 				E8F8FF59222E3EE100B2CE06 /* Service */,
 				E8F8FF58222E3ED000B2CE06 /* Controller */,
 				E8F8FF57222E3EC200B2CE06 /* View */,

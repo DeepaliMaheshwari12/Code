@@ -15,5 +15,7 @@ struct Constants {
     static let collectionViewCellIdentifier = "customCellIdentifier"
     static let iPadPadding = 50
     static let collectionViewEstimatedSizeHeight = 10
-
+    static let topAndBottomAnchorForCell = 10
+    static let widthAnchorForCell = 20
+    static let widthAndHeightConstantForCell = 100
 }

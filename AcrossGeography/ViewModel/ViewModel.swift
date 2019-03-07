@@ -37,7 +37,7 @@ class ViewModel {
             completionHandler(image, error)
         }
     }
-    // Business Logic
+    // MARK: - Business Logic
     func checkForNilObjectInJSON(dataModelObject: DataModel) -> DataModel {
         var jsonResult = dataModelObject
 
