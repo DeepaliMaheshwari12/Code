@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 
 class ViewModel {
-
+    // MARK: - Properties
     var dataModel: DataModel?
-
+    // MARK: - Service Calls
     func callWebAPIforJSONFile(completion:@escaping (DataModel) -> Void) {
 
         APIManager().makeRequest {[weak self] (result, _) in
@@ -25,18 +25,6 @@ class ViewModel {
             completion(dataModel)
     }
 }
-    func checkForNilObjectInJSON(dataModelObject: DataModel) -> DataModel {
-        var jsonResult = dataModelObject
-
-        let itemsNotNil = jsonResult.rows.compactMap { (itemDesc: DataModelInfoDetails) -> DataModelInfoDetails? in
-            if itemDesc.title == nil && itemDesc.description == nil && itemDesc.imageHref == nil {
-                return nil
-            }
-            return itemDesc
-        }
-        jsonResult.rows = itemsNotNil
-        return jsonResult
-        }
     func imageFrom(url: URL,
                    completionHandler: @escaping (UIImage?, Error?) -> Void) {
         APIManager().imageFrom(url: url) { (downloadedImage, error) in
@@ -49,4 +37,17 @@ class ViewModel {
             completionHandler(image, error)
         }
     }
+    // Business Logic
+    func checkForNilObjectInJSON(dataModelObject: DataModel) -> DataModel {
+        var jsonResult = dataModelObject
+
+        let itemsNotNil = jsonResult.rows.compactMap { (itemDesc: DataModelInfoDetails) -> DataModelInfoDetails? in
+            if itemDesc.title == nil && itemDesc.description == nil && itemDesc.imageHref == nil {
+                return nil
+            }
+            return itemDesc
+        }
+        jsonResult.rows = itemsNotNil
+        return jsonResult
     }
+}

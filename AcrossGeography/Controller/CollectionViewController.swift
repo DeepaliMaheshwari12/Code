@@ -9,6 +9,7 @@
 import UIKit
 
 class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+    // MARK: - Properties
     let apiManager = APIManager()
     var refreshCtrl: UIRefreshControl!
     var cache: NSCache<AnyObject, AnyObject>!
@@ -20,6 +21,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         return layout
     }()
     let customCellIdentifier = Constants.collectionViewCellIdentifier
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -34,7 +36,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         viewModel = ViewModel()
         fetchDataFromViewModel()
     }
-
+    // MARK: - Fetch Data
     @objc fileprivate func fetchDataFromViewModel() {
 
         viewModel.callWebAPIforJSONFile { (response) in
@@ -45,20 +47,17 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         }
     }
 }
-
+    // MARK: - Set Navigation Bar
     fileprivate func setupNavBar() {
         navigationItem.title = viewModel.dataModel?.title
         navigationController?.navigationBar.backgroundColor = .yellow
         navigationController?.navigationBar.isTranslucent = false
     }
+    // MARK: - Delegate and Datasource
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let viewDataModelCheck = viewModel else {
+        guard let viewDataModelCheck = viewModel, let viewDataModel = viewDataModelCheck.dataModel else {
             return 0
         }
-        guard let viewDataModel = viewDataModelCheck.dataModel else {
-            return 0
-        }
-
         return viewDataModel.rows.count
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -100,7 +99,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         return collectionView.frame.size
 
     }
-    // Orientation Methods
+    // MARK: - Orientation Methods 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         layout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: 10)
         super.traitCollectionDidChange(previousTraitCollection)

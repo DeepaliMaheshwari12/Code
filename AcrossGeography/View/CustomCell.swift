@@ -10,19 +10,33 @@ import Foundation
 import UIKit
 
 class CustomCell: UICollectionViewCell {
-    //This has to be fixed so that data can be set here rather than in Controller
-//    var customCellViewModel: CanadaInfo {
-//        didSet{
-//            self.label.text = customCellViewModel.title
-//            self.detailLabel.text = customCellViewModel.description
-//            self.imageView.image = customCellViewModel.imageHref
-//        }
-//    }
+    // MARK: - Properties
     lazy var width: NSLayoutConstraint = {
         let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
         width.isActive = true
         return width
     }()
+    var label: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .yellow
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    var detailLabel: UILabel = {
+        let detailLabel = UILabel()
+        detailLabel.backgroundColor = .yellow
+        detailLabel.numberOfLines = 0
+        detailLabel.translatesAutoresizingMaskIntoConstraints = false
+        return detailLabel
+    }()
+    var imageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "cake.jpg"))
+        imageView.contentMode = .scaleToFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -32,6 +46,7 @@ class CustomCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    // MARK: - Cell Layout
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
         width.constant = bounds.size.width
         return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1))
@@ -59,24 +74,4 @@ class CustomCell: UICollectionViewCell {
             contentView.bottomAnchor.constraint(equalTo: lastSubview.bottomAnchor, constant: 10).isActive = true
         }
     }
-    var label: UILabel = {
-        let label = UILabel()
-        label.backgroundColor = .yellow
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    var detailLabel: UILabel = {
-        let detailLabel = UILabel()
-        detailLabel.backgroundColor = .yellow
-        detailLabel.numberOfLines = 0
-        detailLabel.translatesAutoresizingMaskIntoConstraints = false
-        return detailLabel
-    }()
-    var imageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "cake.jpg"))
-        imageView.contentMode = .scaleToFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
 }

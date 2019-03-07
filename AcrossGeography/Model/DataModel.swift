@@ -9,11 +9,13 @@
 import Foundation
 
 struct DataModel: Codable {
+    // MARK: - Properties
     var title: String
     var rows: [DataModelInfoDetails]
 }
 
 struct DataModelInfoDetails: Codable {
+    // MARK: - Properties
     var title: String?
     var description: String?
     var imageHref: String?
@@ -21,6 +23,7 @@ struct DataModelInfoDetails: Codable {
 
 // Created extension so that we can have default memberwise initializer
 extension DataModelInfoDetails {
+    // MARK: - Initialization
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         let title: String? = try values.decodeIfPresent(String.self, forKey: .title)

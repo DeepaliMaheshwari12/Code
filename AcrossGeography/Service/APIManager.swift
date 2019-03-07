@@ -39,7 +39,6 @@ class APIManager {
             to: destination).downloadProgress(closure: { _ in
             }).response(completionHandler: { (_) in
                 let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as NSString
-                // This code has be to be fixed. It is giving error in parsing facts.json
                 let plistPath = paths.appendingPathComponent(Constants.jsonDownloadResponseFile)
                     do {
                         let data1 = try Data(contentsOf: URL(fileURLWithPath: plistPath), options: .mappedIfSafe)
