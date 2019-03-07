@@ -46,8 +46,10 @@ class ViewControllerTests: XCTestCase {
     func testConformsToCollectionViewDelegate() {
         XCTAssert(collectionViewController.conforms(to: UICollectionViewDelegate.self))
     }
-    func testHasTitleView() {
-        XCTAssertNotNil(collectionViewController.navigationItem.titleView)
+    func testNavigationTitle() {
+        let title = "About Cananda"
+        collectionViewController.navigationItem.title = title
+        XCTAssertNotNil(collectionViewController.navigationItem.title)
     }
     func testCustomCell() {
         let indexPath = NSIndexPath(row: 0, section: 0)
