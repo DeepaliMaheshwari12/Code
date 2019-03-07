@@ -11,9 +11,10 @@ import UIKit
 
 class ViewModel {
     // MARK: - Properties
-    var dataModel: DataModel?
+    var dataModel: FactsDataModel?
+    let cache = NSCache<AnyObject, AnyObject>()
     // MARK: - Service Calls
-    func fetchData(completion:@escaping (DataModel) -> Void) {
+    func fetchData(completion:@escaping (FactsDataModel) -> Void) {
 
         APIManager().makeRequest {[weak self] (result, _) in
 
@@ -38,7 +39,7 @@ class ViewModel {
         }
     }
     // MARK: - Business Logic
-    func checkForNilObjectInJSON(dataModelObject: DataModel) -> DataModel {
+    func checkForNilObjectInJSON(dataModelObject: FactsDataModel) -> FactsDataModel {
         var jsonResult = dataModelObject
 
         let itemsNotNil = jsonResult.rows.compactMap { (itemDesc: DataModelInfoDetails) -> DataModelInfoDetails? in
@@ -50,16 +51,18 @@ class ViewModel {
         jsonResult.rows = itemsNotNil
         return jsonResult
     }
-    func provideCellDataAt(indexPath: IndexPath) -> ([String: String]) {
-
-        var values = [String: String]()
-        values[Constants.title] = dataModel?.rows[indexPath.row].title
-        values[Constants.description] = dataModel?.rows[indexPath.row].description
-        values[Constants.image] = dataModel?.rows[indexPath.row].imageHref
-        return (values)
+    func cellDataAt(indexPath: IndexPath) -> (DataModelInfoDetails) {
+        return (DataModelInfoDetails(title: dataModel?.rows[indexPath.row].title,
+                                     description: dataModel?.rows[indexPath.row].description,
+                                     imageHref: dataModel?.rows[indexPath.row].imageHref))
 
     }
-    func provideValidURLImage(atIndex: IndexPath, competion: @escaping (UIImage?, Error?) -> Void) {
+    func provideValidURLImage(atIndex: IndexPath, completion: @escaping (UIImage?) -> Void) {
+        let image = imageFromCache(indexPath: atIndex)
+        if image != nil {
+            completion(image)
+            return
+        }
         guard let imageURL = dataModel?.rows[atIndex.row].imageHref else {
             return
         }
@@ -67,11 +70,20 @@ class ViewModel {
         guard changedURL != nil else {
             return
         }
-        imageFrom(url: changedURL!) { (image, error) in
+        imageFrom(url: changedURL!) { (image, _) in
             guard let imageData = image else {
-               return competion(nil, error)
+               return completion(nil)
             }
-            competion(imageData, nil)
+            self.cache.setObject(imageData, forKey: (atIndex as NSIndexPath).row as AnyObject)
+            completion(imageData)
+            }
+        }
+    func imageFromCache(indexPath: IndexPath) -> (UIImage?) {
+        if cache.object(forKey: (indexPath as NSIndexPath).row as AnyObject) != nil {
+            // Use cache
+            return (cache.object(forKey: (indexPath as NSIndexPath).row as AnyObject) as? UIImage)!
+        } else {
+            return nil
         }
     }
 }

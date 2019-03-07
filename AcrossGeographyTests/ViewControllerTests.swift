@@ -12,11 +12,11 @@ import UIKit
 import XCTest
 
 class ViewControllerTests: XCTestCase {
-    var customCell: BasicCollectionCell?
-    var collectionViewController: CollectionViewController!
+    var customCell: FactsBasicCollectionCell?
+    var collectionViewController: FactsCollectionViewController!
     override func setUp() {
         let flowLayout = UICollectionViewFlowLayout()
-        collectionViewController = CollectionViewController(collectionViewLayout: flowLayout)
+        collectionViewController = FactsCollectionViewController(collectionViewLayout: flowLayout)
     }
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
@@ -31,7 +31,7 @@ class ViewControllerTests: XCTestCase {
     }
     func testViewIsNotNilAfterViewDidLoad() {
         let flowLayout = UICollectionViewFlowLayout()
-        let collectionViewController = CollectionViewController(collectionViewLayout: flowLayout)
+        let collectionViewController = FactsCollectionViewController(collectionViewLayout: flowLayout)
         XCTAssertNotNil(collectionViewController.collectionView)
     }
     func testCollectionViewDataSource() {
@@ -53,7 +53,7 @@ class ViewControllerTests: XCTestCase {
     }
     func testCustomCell() {
         let indexPath = NSIndexPath(row: 0, section: 0)
-        let cell = collectionViewController.collectionView.dequeueReusableCell(withReuseIdentifier: "customCellIdentifier", for: indexPath as IndexPath) as? BasicCollectionCell
+        let cell = collectionViewController.collectionView.dequeueReusableCell(withReuseIdentifier: "customCellIdentifier", for: indexPath as IndexPath) as? FactsBasicCollectionCell
         cell?.detailLabel.text = "Detailed Text"
         XCTAssertNotNil(cell?.detailLabel.text)
     }

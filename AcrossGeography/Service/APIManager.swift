@@ -24,7 +24,7 @@ class APIManager {
         }
     }
     // Downloading JSON file from server and reading the contents of file
-    func makeRequest(completion:@escaping (DataModel?, Error?) -> Void) {
+    func makeRequest(completion:@escaping (FactsDataModel?, Error?) -> Void) {
         let destination: DownloadRequest.DownloadFileDestination = { _, _ in
             let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             let file = directoryURL.appendingPathComponent(Constants.jsonDownloadResponseFile, isDirectory: false)
@@ -44,7 +44,7 @@ class APIManager {
                         let data1 = try Data(contentsOf: URL(fileURLWithPath: plistPath), options: .mappedIfSafe)
                         let string = String(decoding: data1, as: UTF8.self)
                         let data = string.data(using: .utf8)!
-                        let jsonResult = try JSONDecoder().decode(DataModel.self, from: data)
+                        let jsonResult = try JSONDecoder().decode(FactsDataModel.self, from: data)
                         completion(jsonResult, nil)
                        } catch let error {
                             completion(nil, error)

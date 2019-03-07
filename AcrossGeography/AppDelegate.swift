@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         // Creating rootviewController programatically
         let flowLayout = UICollectionViewFlowLayout()
-        let collectionViewController = CollectionViewController(collectionViewLayout: flowLayout)
+        let collectionViewController = FactsCollectionViewController(collectionViewLayout: flowLayout)
         let navigationController = UINavigationController(rootViewController: collectionViewController)
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()

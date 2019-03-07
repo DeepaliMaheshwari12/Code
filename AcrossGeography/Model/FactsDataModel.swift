@@ -1,5 +1,5 @@
 //
-//  DataModel.swift
+//  FactsDataModel.swift
 //  AcrossGeography
 //
 //  Created by GtoMobility on 05/03/19.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DataModel: Codable {
+struct FactsDataModel: Codable {
     // MARK: - Properties
     var title: String
     var rows: [DataModelInfoDetails]
@@ -32,5 +32,9 @@ extension DataModelInfoDetails {
         self.description = description
         self.imageHref = imageHref
     }
-
+    init(title: String, description: String, imageHref: String) {
+        self.title = title
+        self.description = description
+        self.imageHref = imageHref
+    }
 }

@@ -13,7 +13,7 @@ class ViewModelTests: XCTestCase {
     var viewModel = ViewModel()
     func testViewModelIsValid() {
         let dataModelInfo = DataModelInfoDetails(title: "Title", description: "description", imageHref: "https://abc.com")
-        let modelData = DataModel(title: "Welcome", rows: [dataModelInfo])
+        let modelData = FactsDataModel(title: "Welcome", rows: [dataModelInfo])
 
         viewModel.dataModel?.title = modelData.title
         viewModel.dataModel?.rows = [dataModelInfo]
@@ -24,7 +24,7 @@ class ViewModelTests: XCTestCase {
         let dataModelInfo1 = DataModelInfoDetails(title: "Title", description: "description", imageHref: "https://abc.com")
         let dataModelInfo2 = DataModelInfoDetails(title: nil, description: nil, imageHref: nil)
         let dataModelInfo3 = DataModelInfoDetails(title: "Title", description: "description", imageHref: "https://abc.com")
-        let modelData = DataModel(title: "Welcome", rows: [dataModelInfo1, dataModelInfo2, dataModelInfo3])
+        let modelData = FactsDataModel(title: "Welcome", rows: [dataModelInfo1, dataModelInfo2, dataModelInfo3])
         let remainingObject = viewModel.checkForNilObjectInJSON(dataModelObject: modelData)
         XCTAssertFalse(remainingObject.rows.count == modelData.rows.count)
     }

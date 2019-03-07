@@ -1,5 +1,5 @@
 //
-//  CollectionViewController.swift
+//  FactsCollectionViewController.swift
 //  UICollectionViewExample
 //
 //  Created by GtoMobility on 05/03/19.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class FactsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     // MARK: - Properties
     private let apiManager = APIManager()
-    private lazy var refreshCtrl: UIRefreshControl = {
+    private lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = .blue
         return refreshControl
@@ -28,16 +28,15 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         // Creating the refresh functionality
-        refreshCtrl.addTarget(self, action: #selector(fetchDataFromViewModel), for: .valueChanged)
-        collectionView.refreshControl = refreshCtrl
+        refreshControl.addTarget(self, action: #selector(fetchDataFromViewModel), for: .valueChanged)
+        collectionView.refreshControl = refreshControl
         collectionView.backgroundColor = UIColor.lightGray
         activityView = UIActivityIndicatorView(style: .whiteLarge)
         activityView.center = self.view.center
         activityView.startAnimating()
         self.view.addSubview(activityView)
-        collectionView.register(BasicCollectionCell.self, forCellWithReuseIdentifier: Constants.collectionViewCellIdentifier)
+        collectionView.register(FactsBasicCollectionCell.self, forCellWithReuseIdentifier: Constants.collectionViewCellIdentifier)
         collectionView?.collectionViewLayout = layout
         cache = NSCache()
         // Fetching the data on launch
@@ -53,13 +52,13 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
                     self.setupNavBar()
                     self.activityView.stopAnimating()
                     self.collectionView.reloadData()
-                    self.refreshCtrl.endRefreshing()
+                    self.refreshControl.endRefreshing()
                 }
             }
         } else {
             self.activityView.stopAnimating()
             throwAlertMessage()
-            self.refreshCtrl.endRefreshing()
+            self.refreshControl.endRefreshing()
         }
     }
     // MARK: - Set Navigation Bar
@@ -76,25 +75,17 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         return viewDataModel.rows.count
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.collectionViewCellIdentifier, for: indexPath) as? BasicCollectionCell
-        let dataToDisplay = viewModel.provideCellDataAt(indexPath: indexPath)
-        customCell?.label.text = dataToDisplay[Constants.title]
-        customCell?.label.font = UIFont(name: "Helvetica-Bold", size: 16)
-        customCell?.detailLabel.text = dataToDisplay[Constants.description]
+        let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.collectionViewCellIdentifier, for: indexPath) as? FactsBasicCollectionCell
+        let dataToDisplay = viewModel.cellDataAt(indexPath: indexPath)
+        customCell?.label.text = dataToDisplay.title
+        customCell?.label.font = UIFont(name: "Helvetica-Bold", size: Constants.customCellTextLabelFont)
+        customCell?.detailLabel.text = dataToDisplay.description
         customCell?.imageView.image = nil
-        if cache.object(forKey: (indexPath as NSIndexPath).row as AnyObject) != nil {
-            // Use cache
-            customCell?.imageView.image = cache.object(forKey: (indexPath as NSIndexPath).row as AnyObject) as? UIImage
-        }
         if Reachability.isConnectedToNetwork() == true {
-            viewModel.provideValidURLImage(atIndex: indexPath) { (image, _) in
+            viewModel.provideValidURLImage(atIndex: indexPath) { (image) in
                 DispatchQueue.main.async(execute: { () -> Void in
-                    guard let imageData = image else {
-                        return
-                    }
                     if collectionView.indexPath(for: customCell!)?.row == indexPath.row {
                         customCell?.imageView.image = image
-                        self.cache.setObject(imageData, forKey: (indexPath as NSIndexPath).row as AnyObject)
                     }
                 })
             }
@@ -113,18 +104,18 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     }
     // MARK: - Orientation Methods
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        layout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: 10)
+        layout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: Constants.collectionViewLayoutheight)
         super.traitCollectionDidChange(previousTraitCollection)
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        layout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: 10)
+        layout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: Constants.collectionViewLayoutheight)
         layout.invalidateLayout()
         super.viewWillTransition(to: size, with: coordinator)
     }
     // MARK: - Alert
     func throwAlertMessage() {
         let alertController = UIAlertController(title: Constants.networkFailureTitle, message: Constants.networkFailureMessage, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default)
+        let okAction = UIAlertAction(title: Constants.okMessage, style: .default)
         alertController.addAction(okAction)
         self.present(alertController, animated: true, completion: nil)
     }

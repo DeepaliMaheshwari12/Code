@@ -1,5 +1,5 @@
 //
-//  BasicCollectionCell.swift
+//  FactsBasicCollectionCell.swift
 //  AcrossGeography
 //
 //  Created by GtoMobility on 05/03/19.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class BasicCollectionCell: UICollectionViewCell {
+class FactsBasicCollectionCell: UICollectionViewCell {
     // MARK: - Properties
     lazy var width: NSLayoutConstraint = {
         let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
@@ -52,24 +52,24 @@ class BasicCollectionCell: UICollectionViewCell {
     private func setupViews() {
         let margins = contentView.layoutMarginsGuide
         contentView.addSubview(imageView)
-        imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12).isActive = true
+        imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellLayoutsSize.topAnchorConstraint).isActive = true
         imageView.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: CellLayoutsSize.widthAndHeightAnchorConstraint).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: CellLayoutsSize.widthAndHeightAnchorConstraint).isActive = true
         imageView.bottomAnchor.constraint(lessThanOrEqualTo: margins.bottomAnchor).isActive = true
         contentView.addSubview(label)
-        label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
-        label.leftAnchor.constraint(equalTo: imageView.rightAnchor, constant: 20).isActive = true
+        label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellLayoutsSize.topAnchorConstraint).isActive = true
+        label.leftAnchor.constraint(equalTo: imageView.rightAnchor, constant: CellLayoutsSize.rightAnchorConstraint).isActive = true
         label.widthAnchor.constraint(equalToConstant: imageView.frame.width ).isActive = true
         label.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
         contentView.addSubview(detailLabel)
-        detailLabel.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10).isActive = true
-        detailLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor, constant: 20).isActive = true
+        detailLabel.topAnchor.constraint(equalTo: label.bottomAnchor, constant: CellLayoutsSize.topAnchorConstraint).isActive = true
+        detailLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor, constant: CellLayoutsSize.rightAnchorConstraint).isActive = true
         detailLabel.widthAnchor.constraint(equalToConstant: imageView.frame.width).isActive = true
         detailLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
 
         if let lastSubview = contentView.subviews.last {
-            contentView.bottomAnchor.constraint(equalTo: lastSubview.bottomAnchor, constant: 10).isActive = true
+            contentView.bottomAnchor.constraint(equalTo: lastSubview.bottomAnchor, constant: CellLayoutsSize.topAnchorConstraint).isActive = true
         }
     }
 }

@@ -17,11 +17,11 @@ class DataModelTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
 }
     func testModelIsInvalid() {
-        let model = DataModel(title: "Test", rows: [DataModelInfoDetails(title: "Lion", description: "Big Cat", imageHref: "https://abc.com")])
+        let model = FactsDataModel(title: "Test", rows: [DataModelInfoDetails(title: "Lion", description: "Big Cat", imageHref: "https://abc.com")])
         XCTAssertNotNil(model.rows[0].title)
     }
     func testModelIsValid() {
-        let model = DataModel(title: "Test", rows: [DataModelInfoDetails(title: "Lion", description: "Big Cat", imageHref: "https://abc.com")])
+        let model = FactsDataModel(title: "Test", rows: [DataModelInfoDetails(title: "Lion", description: "Big Cat", imageHref: "https://abc.com")])
         XCTAssertTrue(model.rows[0].title == "Lion")
     }
     func testInfo() {
@@ -30,7 +30,7 @@ class DataModelTests: XCTestCase {
         XCTAssertTrue(model.imageHref == "https://abc.com")
     }
     func testDataModelIsValid() {
-        let dataModel = DataModel(title: "Welcome", rows: [DataModelInfoDetails(title: nil, description: nil, imageHref: nil)])
+        let dataModel = FactsDataModel(title: "Welcome", rows: [DataModelInfoDetails(title: nil, description: nil, imageHref: nil)])
         XCTAssertNotNil(dataModel)
     }
 }
