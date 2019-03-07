@@ -12,7 +12,7 @@ import UIKit
 import XCTest
 
 class ViewControllerTests: XCTestCase {
-    var customCell: CustomCell?
+    var customCell: BasicCollectionCell?
     var collectionViewController: CollectionViewController!
     override func setUp() {
         let flowLayout = UICollectionViewFlowLayout()
@@ -53,7 +53,7 @@ class ViewControllerTests: XCTestCase {
     }
     func testCustomCell() {
         let indexPath = NSIndexPath(row: 0, section: 0)
-        let cell = collectionViewController.collectionView.dequeueReusableCell(withReuseIdentifier: "customCellIdentifier", for: indexPath as IndexPath) as? CustomCell
+        let cell = collectionViewController.collectionView.dequeueReusableCell(withReuseIdentifier: "customCellIdentifier", for: indexPath as IndexPath) as? BasicCollectionCell
         cell?.detailLabel.text = "Detailed Text"
         XCTAssertNotNil(cell?.detailLabel.text)
     }

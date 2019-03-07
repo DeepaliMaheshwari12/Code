@@ -1,5 +1,5 @@
 //
-//  CustomCell.swift
+//  BasicCollectionCell.swift
 //  AcrossGeography
 //
 //  Created by GtoMobility on 05/03/19.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class CustomCell: UICollectionViewCell {
+class BasicCollectionCell: UICollectionViewCell {
     // MARK: - Properties
     lazy var width: NSLayoutConstraint = {
         let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)

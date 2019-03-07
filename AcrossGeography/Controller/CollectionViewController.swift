@@ -29,7 +29,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         refreshCtrl = UIRefreshControl()
         refreshCtrl.addTarget(self, action: #selector(fetchDataFromViewModel), for: .valueChanged)
         collectionView.backgroundColor = UIColor.blue
-        collectionView.register(CustomCell.self, forCellWithReuseIdentifier: customCellIdentifier)
+        collectionView.register(BasicCollectionCell.self, forCellWithReuseIdentifier: customCellIdentifier)
         collectionView?.collectionViewLayout = layout
         cache = NSCache()
         // Fetching the data on launch
@@ -61,7 +61,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         return viewDataModel.rows.count
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: customCellIdentifier, for: indexPath) as? CustomCell
+        let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: customCellIdentifier, for: indexPath) as? BasicCollectionCell
         customCell?.label.text = viewModel.dataModel?.rows[indexPath.row].title ?? ""
         customCell?.detailLabel.text = viewModel.dataModel?.rows[indexPath.row].description ?? ""
         customCell?.imageView.image = nil
