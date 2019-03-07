@@ -25,13 +25,11 @@ class APIManager {
     }
     // Downloading JSON file from server and reading the contents of file
     func makeRequest(completion:@escaping (DataModel?, Error?) -> Void) {
-
         let destination: DownloadRequest.DownloadFileDestination = { _, _ in
             let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             let file = directoryURL.appendingPathComponent("facts.json", isDirectory: false)
             return (file, [.createIntermediateDirectories, .removePreviousFile])
         }
-
         Alamofire.download(
             "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json",
             method: .get,
@@ -45,15 +43,12 @@ class APIManager {
                 print(defaultDownloadResponse.response?.statusCode as Any)
                 let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as NSString
                 // This code has be to be fixed. It is giving error in parsing facts.json
-                do {
-                    try FileManager.default.copyfileToUserDocumentDirectory(forResource: "Contents", ofType: "json")
-                } catch let error {
-                        print(error)
-                }
-                let plistPath = paths.appendingPathComponent("Contents.json")
-
+                let plistPath = paths.appendingPathComponent("facts.json")
                     do {
-                         let data = try Data(contentsOf: URL(fileURLWithPath: plistPath), options: [])
+                        let data1 = try Data(contentsOf: URL(fileURLWithPath: plistPath), options: .mappedIfSafe)
+                        let string = String(decoding: data1, as: UTF8.self)
+                        print(string)
+                        let data = string.data(using: .utf8)!
                         var jsonResult = try JSONDecoder().decode(DataModel.self, from: data)
                         //Has to do compact map to remove nil values
                         let itemsNotNil = jsonResult.rows.compactMap { (itemDesc: DataModelInfoDetails) -> DataModelInfoDetails? in
@@ -67,28 +62,7 @@ class APIManager {
                        } catch let error {
                             completion(nil, error)
                     }
-
             })
-
     }
 
-}
-
-// This is temporary method and will be removed
-extension FileManager {
-    func copyfileToUserDocumentDirectory(forResource name: String,
-                                         ofType ext: String) throws {
-        if let bundlePath = Bundle.main.path(forResource: name, ofType: ext),
-            let destPath = NSSearchPathForDirectoriesInDomains(.documentDirectory,
-                                                               .userDomainMask,
-                                                               true).first {
-            let fileName = "\(name).\(ext)"
-            let fullDestPath = URL(fileURLWithPath: destPath)
-                .appendingPathComponent(fileName)
-            let fullDestPathString = fullDestPath.path
-            if !self.fileExists(atPath: fullDestPathString) {
-                try self.copyItem(atPath: bundlePath, toPath: fullDestPathString)
-            }
-        }
-    }
 }

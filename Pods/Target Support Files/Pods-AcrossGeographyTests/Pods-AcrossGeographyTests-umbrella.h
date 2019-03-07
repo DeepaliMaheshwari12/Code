@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_CanadaSpecsUITestsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_CanadaSpecsUITestsVersionString[];
+FOUNDATION_EXPORT double Pods_AcrossGeographyTestsVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_AcrossGeographyTestsVersionString[];
 

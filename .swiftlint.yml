@@ -1,5 +1,5 @@
 line_length:
-  warning: 320
+  warning: 330
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Carthage
   - Pods
