@@ -69,6 +69,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
             // Use cache
             customCell?.imageView.image = cache.object(forKey: (indexPath as NSIndexPath).row as AnyObject) as? UIImage
         } else {
+            //do check in view model and remove this
             let imageURL = viewModel.dataModel?.rows[indexPath.row].imageHref ?? ""
             let url: URL! = URL(string: imageURL)
             guard url != nil else {

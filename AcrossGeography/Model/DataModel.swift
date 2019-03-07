@@ -24,15 +24,15 @@ struct DataModelInfoDetails: Codable {
 // Created extension so that we can have default memberwise initializer
 extension DataModelInfoDetails {
     // MARK: - Initialization
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        let title: String? = try values.decodeIfPresent(String.self, forKey: .title)
-        let description: String? = try values.decodeIfPresent(String.self, forKey: .description)
-        let imageHref: String? = try values.decodeIfPresent(String.self, forKey: .imageHref)
-        self.title = title
-        self.description = description
-        self.imageHref = imageHref
-    }
+//    init(from decoder: Decoder) throws {
+//        let values = try decoder.container(keyedBy: CodingKeys.self)
+//        let title: String? = try values.decodeIfPresent(String.self, forKey: .title)
+//        let description: String? = try values.decodeIfPresent(String.self, forKey: .description)
+//        let imageHref: String? = try values.decodeIfPresent(String.self, forKey: .imageHref)
+//        self.title = title
+//        self.description = description
+//        self.imageHref = imageHref
+//    }
     init?(dataModelInfo: DataModelInfoDetails) {
         guard let title = dataModelInfo.title, let description = dataModelInfo.description, let imageHref = dataModelInfo.imageHref else {
             return
