@@ -16,22 +16,20 @@ class BasicCollectionCell: UICollectionViewCell {
         width.isActive = true
         return width
     }()
-    var label: UILabel = {
+    lazy var label: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .yellow
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    var detailLabel: UILabel = {
+    lazy var detailLabel: UILabel = {
         let detailLabel = UILabel()
-        detailLabel.backgroundColor = .yellow
         detailLabel.numberOfLines = 0
         detailLabel.translatesAutoresizingMaskIntoConstraints = false
         return detailLabel
     }()
-    var imageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "cake.jpg"))
+    lazy var imageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: Constants.placeHolderImage))
         imageView.contentMode = .scaleToFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -40,7 +38,7 @@ class BasicCollectionCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.backgroundColor = UIColor.red
+        contentView.backgroundColor = UIColor.darkGray
         setupViews()
     }
     required init?(coder aDecoder: NSCoder) {
@@ -51,10 +49,10 @@ class BasicCollectionCell: UICollectionViewCell {
         width.constant = bounds.size.width
         return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1))
     }
-    fileprivate func setupViews() {
+    private func setupViews() {
         let margins = contentView.layoutMarginsGuide
         contentView.addSubview(imageView)
-        imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
+        imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12).isActive = true
         imageView.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 100).isActive = true

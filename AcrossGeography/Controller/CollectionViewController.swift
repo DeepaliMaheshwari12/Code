@@ -10,17 +10,17 @@ import UIKit
 
 class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     // MARK: - Properties
-    let apiManager = APIManager()
-    var refreshCtrl: UIRefreshControl!
-    var cache: NSCache<AnyObject, AnyObject>!
+    private let apiManager = APIManager()
+    private var refreshCtrl: UIRefreshControl!
+    private var cache: NSCache<AnyObject, AnyObject>!
     var viewModel: ViewModel!
-    var layout: UICollectionViewFlowLayout = {
+    private var activityView: UIActivityIndicatorView!
+    private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         let width = UIScreen.main.bounds.size.width
         layout.estimatedItemSize = CGSize(width: width, height: CGFloat(Float(Constants.collectionViewEstimatedSizeHeight)))
         return layout
     }()
-    let customCellIdentifier = Constants.collectionViewCellIdentifier
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,8 +28,12 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         // Creating the refresh functionality
         refreshCtrl = UIRefreshControl()
         refreshCtrl.addTarget(self, action: #selector(fetchDataFromViewModel), for: .valueChanged)
-        collectionView.backgroundColor = UIColor.blue
-        collectionView.register(BasicCollectionCell.self, forCellWithReuseIdentifier: customCellIdentifier)
+        collectionView.backgroundColor = UIColor.lightGray
+        activityView = UIActivityIndicatorView(style: .whiteLarge)
+        activityView.center = self.view.center
+        activityView.startAnimating()
+        self.view.addSubview(activityView)
+        collectionView.register(BasicCollectionCell.self, forCellWithReuseIdentifier: Constants.collectionViewCellIdentifier)
         collectionView?.collectionViewLayout = layout
         cache = NSCache()
         // Fetching the data on launch
@@ -39,10 +43,11 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     // MARK: - Fetch Data
     @objc fileprivate func fetchDataFromViewModel() {
 
-        viewModel.callWebAPIforJSONFile { (response) in
+        viewModel.fetchData { (response) in
         self.viewModel.dataModel = response
         DispatchQueue.main.async {
             self.setupNavBar()
+            self.activityView.stopAnimating()
             self.collectionView.reloadData()
         }
     }
@@ -50,7 +55,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     // MARK: - Set Navigation Bar
     fileprivate func setupNavBar() {
         navigationItem.title = viewModel.dataModel?.title
-        navigationController?.navigationBar.backgroundColor = .yellow
+        navigationController?.navigationBar.backgroundColor = .lightGray
         navigationController?.navigationBar.isTranslucent = false
     }
     // MARK: - Delegate and Datasource
@@ -61,36 +66,30 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         return viewDataModel.rows.count
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: customCellIdentifier, for: indexPath) as? BasicCollectionCell
-        customCell?.label.text = viewModel.dataModel?.rows[indexPath.row].title ?? ""
-        customCell?.detailLabel.text = viewModel.dataModel?.rows[indexPath.row].description ?? ""
+        let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.collectionViewCellIdentifier, for: indexPath) as? BasicCollectionCell
+        let dataToDisplay = viewModel.provideCellDataAt(indexPath: indexPath)
+        customCell?.label.text = dataToDisplay[Constants.title]
+        customCell?.label.font = UIFont(name: "Helvetica-Bold", size: 16)
+        customCell?.detailLabel.text = dataToDisplay[Constants.description]
         customCell?.imageView.image = nil
         if cache.object(forKey: (indexPath as NSIndexPath).row as AnyObject) != nil {
             // Use cache
             customCell?.imageView.image = cache.object(forKey: (indexPath as NSIndexPath).row as AnyObject) as? UIImage
-        } else {
-            //do check in view model and remove this
-            let imageURL = viewModel.dataModel?.rows[indexPath.row].imageHref ?? ""
-            let url: URL! = URL(string: imageURL)
-            guard url != nil else {
-                return customCell!
-            }
-            viewModel.imageFrom(url: url) { (downloadedImage, _) in
-                guard let image = downloadedImage else {
+        }
+        viewModel.provideValidURLImage(atIndex: indexPath) { (image, _) in
+            DispatchQueue.main.async(execute: { () -> Void in
+                guard let imageData = image else {
                     return
                 }
-                    DispatchQueue.main.async(execute: { () -> Void in
-                        if collectionView.indexPath(for: customCell!)?.row == indexPath.row {
-                            let img: UIImage! = image
-                            customCell!.imageView.image = img
-                            self.cache.setObject(img, forKey: (indexPath as NSIndexPath).row as AnyObject)
-                        }
-                    })
+                if collectionView.indexPath(for: customCell!)?.row == indexPath.row {
+                    customCell?.imageView.image = image
+                    self.cache.setObject(imageData, forKey: (indexPath as NSIndexPath).row as AnyObject)
+                }
+            })
             }
-
-        }
         return customCell!
-    }
+        }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad {
             let padding: CGFloat =  CGFloat(Float(Constants.iPadPadding))

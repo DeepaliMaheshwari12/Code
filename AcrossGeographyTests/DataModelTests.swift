@@ -29,4 +29,8 @@ class DataModelTests: XCTestCase {
         XCTAssertFalse(model.imageHref == "https://bbc.com")
         XCTAssertTrue(model.imageHref == "https://abc.com")
     }
+    func testDataModelIsValid() {
+        let dataModel = DataModel(title: "Welcome", rows: [DataModelInfoDetails(title: nil, description: nil, imageHref: nil)])
+        XCTAssertNotNil(dataModel)
+    }
 }
