@@ -24,8 +24,7 @@ class APIManagerTests: XCTestCase {
             parameters: nil,
             encoding: JSONEncoding.default,
             headers: nil,
-            to: destination).downloadProgress(closure: { (progress) in
-                print(progress)
+            to: destination).downloadProgress(closure: { (_) in
             }).response(completionHandler: { (defaultDownloadResponse) in
                 if defaultDownloadResponse.response?.statusCode == 200 {
                     promise.fulfill()

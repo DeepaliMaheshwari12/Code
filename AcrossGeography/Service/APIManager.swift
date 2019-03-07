@@ -37,15 +37,13 @@ class APIManager {
             encoding: JSONEncoding.default,
             headers: nil,
             to: destination).downloadProgress(closure: { _ in
-            }).response(completionHandler: { (defaultDownloadResponse) in
-                print(defaultDownloadResponse.response?.statusCode as Any)
+            }).response(completionHandler: { (_) in
                 let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as NSString
                 // This code has be to be fixed. It is giving error in parsing facts.json
                 let plistPath = paths.appendingPathComponent(Constants.jsonDownloadResponseFile)
                     do {
                         let data1 = try Data(contentsOf: URL(fileURLWithPath: plistPath), options: .mappedIfSafe)
                         let string = String(decoding: data1, as: UTF8.self)
-                        print(string)
                         let data = string.data(using: .utf8)!
                         let jsonResult = try JSONDecoder().decode(DataModel.self, from: data)
                         completion(jsonResult, nil)
