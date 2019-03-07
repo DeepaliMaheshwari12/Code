@@ -14,12 +14,12 @@ class APIManagerTests: XCTestCase {
         func testDataNetworkRequest() {
         let destination: DownloadRequest.DownloadFileDestination = { _, _ in
             let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            let file = directoryURL.appendingPathComponent("facts.json", isDirectory: false)
+            let file = directoryURL.appendingPathComponent(Constants.jsonDownloadResponseFile, isDirectory: false)
             return (file, [.createIntermediateDirectories, .removePreviousFile])
         }
         let promise = expectation(description: "Get Data")
         Alamofire.download(
-            "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json",
+            Constants.jsonFileURL,
             method: .get,
             parameters: nil,
             encoding: JSONEncoding.default,

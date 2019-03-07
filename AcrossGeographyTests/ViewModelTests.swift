@@ -10,9 +10,13 @@ import XCTest
 @testable import AcrossGeography
 
 class ViewModelTests: XCTestCase {
+    var viewModel = ViewModel()
     func testViewModelIsValid() {
         let dataModelInfo = DataModelInfoDetails(title: "Title", description: "description", imageHref: "https://abc.com")
-        let viewModel = ViewModel(info: dataModelInfo)
-        XCTAssertFalse(viewModel.title == "ValidTitle")
+        let modelData = DataModel(title: "Welcome", rows: [dataModelInfo])
+
+        viewModel.dataModel?.title = modelData.title
+        viewModel.dataModel?.rows = [dataModelInfo]
+        XCTAssertFalse(viewModel.dataModel?.title == "ValidTitle")
     }
 }

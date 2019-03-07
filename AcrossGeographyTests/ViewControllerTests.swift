@@ -13,10 +13,10 @@ import XCTest
 
 class ViewControllerTests: XCTestCase {
     var customCell: CustomCell?
-    var collectionViewController: CustomViewController!
+    var collectionViewController: CollectionViewController!
     override func setUp() {
         let flowLayout = UICollectionViewFlowLayout()
-        collectionViewController = CustomViewController(collectionViewLayout: flowLayout)
+        collectionViewController = CollectionViewController(collectionViewLayout: flowLayout)
     }
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
@@ -26,12 +26,12 @@ class ViewControllerTests: XCTestCase {
     }
     func testViewControllerModelView() {
         let model = [DataModelInfoDetails(title: "Flag", description: "National Flag", imageHref: "http://abc.c"), DataModelInfoDetails(title: "Fruit", description: "Mango", imageHref: "http://xyz")]
-        collectionViewController.viewModel?.rows =  model
-        XCTAssertFalse(collectionViewController.viewModel?.rows[1].description == "kkkk")
+        collectionViewController.viewModel?.dataModel?.rows =  model
+        XCTAssertFalse(collectionViewController.viewModel?.dataModel!.rows[1].description == "kkkk")
     }
     func testViewIsNotNilAfterViewDidLoad() {
         let flowLayout = UICollectionViewFlowLayout()
-        let collectionViewController = CustomViewController(collectionViewLayout: flowLayout)
+        let collectionViewController = CollectionViewController(collectionViewLayout: flowLayout)
         XCTAssertNotNil(collectionViewController.collectionView)
     }
     func testCollectionViewDataSource() {
