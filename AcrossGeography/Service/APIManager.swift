@@ -27,37 +27,27 @@ class APIManager {
     func makeRequest(completion:@escaping (DataModel?, Error?) -> Void) {
         let destination: DownloadRequest.DownloadFileDestination = { _, _ in
             let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            let file = directoryURL.appendingPathComponent("facts.json", isDirectory: false)
+            let file = directoryURL.appendingPathComponent(Constants.jsonDownloadResponseFile, isDirectory: false)
             return (file, [.createIntermediateDirectories, .removePreviousFile])
         }
         Alamofire.download(
-            "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json",
+            Constants.jsonFileURL,
             method: .get,
             parameters: nil,
             encoding: JSONEncoding.default,
             headers: nil,
-            to: destination).downloadProgress(closure: { (progress) in
-                print(progress)
-
+            to: destination).downloadProgress(closure: { _ in
             }).response(completionHandler: { (defaultDownloadResponse) in
                 print(defaultDownloadResponse.response?.statusCode as Any)
                 let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as NSString
                 // This code has be to be fixed. It is giving error in parsing facts.json
-                let plistPath = paths.appendingPathComponent("facts.json")
+                let plistPath = paths.appendingPathComponent(Constants.jsonDownloadResponseFile)
                     do {
                         let data1 = try Data(contentsOf: URL(fileURLWithPath: plistPath), options: .mappedIfSafe)
                         let string = String(decoding: data1, as: UTF8.self)
                         print(string)
                         let data = string.data(using: .utf8)!
-                        var jsonResult = try JSONDecoder().decode(DataModel.self, from: data)
-                        //compact map to remove nil values
-                        let itemsNotNil = jsonResult.rows.compactMap { (itemDesc: DataModelInfoDetails) -> DataModelInfoDetails? in
-                            if itemDesc.title == nil && itemDesc.description == nil && itemDesc.imageHref == nil {
-                                return nil
-                            }
-                                return itemDesc
-                        }
-                        jsonResult.rows = itemsNotNil
+                        let jsonResult = try JSONDecoder().decode(DataModel.self, from: data)
                         completion(jsonResult, nil)
                        } catch let error {
                             completion(nil, error)
