@@ -11,7 +11,11 @@ import UIKit
 class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     // MARK: - Properties
     private let apiManager = APIManager()
-    private var refreshCtrl: UIRefreshControl!
+    private lazy var refreshCtrl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .blue
+        return refreshControl
+    }()
     private var cache: NSCache<AnyObject, AnyObject>!
     var viewModel: ViewModel!
     private var activityView: UIActivityIndicatorView!
@@ -26,8 +30,8 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         // Creating the refresh functionality
-        refreshCtrl = UIRefreshControl()
         refreshCtrl.addTarget(self, action: #selector(fetchDataFromViewModel), for: .valueChanged)
+        collectionView.refreshControl = refreshCtrl
         collectionView.backgroundColor = UIColor.lightGray
         activityView = UIActivityIndicatorView(style: .whiteLarge)
         activityView.center = self.view.center
@@ -42,16 +46,22 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     }
     // MARK: - Fetch Data
     @objc fileprivate func fetchDataFromViewModel() {
-
-        viewModel.fetchData { (response) in
-        self.viewModel.dataModel = response
-        DispatchQueue.main.async {
-            self.setupNavBar()
+        if Reachability.isConnectedToNetwork() == true {
+            viewModel.fetchData { (response) in
+                self.viewModel.dataModel = response
+                DispatchQueue.main.async {
+                    self.setupNavBar()
+                    self.activityView.stopAnimating()
+                    self.collectionView.reloadData()
+                    self.refreshCtrl.endRefreshing()
+                }
+            }
+        } else {
             self.activityView.stopAnimating()
-            self.collectionView.reloadData()
+            throwAlertMessage()
+            self.refreshCtrl.endRefreshing()
         }
     }
-}
     // MARK: - Set Navigation Bar
     fileprivate func setupNavBar() {
         navigationItem.title = viewModel.dataModel?.title
@@ -76,20 +86,23 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
             // Use cache
             customCell?.imageView.image = cache.object(forKey: (indexPath as NSIndexPath).row as AnyObject) as? UIImage
         }
-        viewModel.provideValidURLImage(atIndex: indexPath) { (image, _) in
-            DispatchQueue.main.async(execute: { () -> Void in
-                guard let imageData = image else {
-                    return
-                }
-                if collectionView.indexPath(for: customCell!)?.row == indexPath.row {
-                    customCell?.imageView.image = image
-                    self.cache.setObject(imageData, forKey: (indexPath as NSIndexPath).row as AnyObject)
-                }
-            })
+        if Reachability.isConnectedToNetwork() == true {
+            viewModel.provideValidURLImage(atIndex: indexPath) { (image, _) in
+                DispatchQueue.main.async(execute: { () -> Void in
+                    guard let imageData = image else {
+                        return
+                    }
+                    if collectionView.indexPath(for: customCell!)?.row == indexPath.row {
+                        customCell?.imageView.image = image
+                        self.cache.setObject(imageData, forKey: (indexPath as NSIndexPath).row as AnyObject)
+                    }
+                })
             }
-        return customCell!
+        } else {
+            throwAlertMessage()
         }
-
+        return customCell!
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad {
             let padding: CGFloat =  CGFloat(Float(Constants.iPadPadding))
@@ -97,9 +110,8 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
             return CGSize(width: collectionViewSize/2, height: collectionViewSize/2)
         }
         return collectionView.frame.size
-
     }
-    // MARK: - Orientation Methods 
+    // MARK: - Orientation Methods
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         layout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: 10)
         super.traitCollectionDidChange(previousTraitCollection)
@@ -108,5 +120,12 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         layout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: 10)
         layout.invalidateLayout()
         super.viewWillTransition(to: size, with: coordinator)
+    }
+    // MARK: - Alert
+    func throwAlertMessage() {
+        let alertController = UIAlertController(title: Constants.networkFailureTitle, message: Constants.networkFailureMessage, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
     }
 }

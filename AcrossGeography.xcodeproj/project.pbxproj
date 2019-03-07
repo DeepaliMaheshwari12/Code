@@ -10,6 +10,7 @@
 		18ECE8F31CD2794ABC47B7C0 /* Pods_AcrossGeography.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 035729BD33EFD7BC02E0D866 /* Pods_AcrossGeography.framework */; };
 		7D5C667098198242CCF9D57F /* Pods_AcrossGeographyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB403FE319E0631C202A17CA /* Pods_AcrossGeographyTests.framework */; };
 		E8B5EA4D2230F8C10092050C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B5EA4C2230F8C10092050C /* Constants.swift */; };
+		E8B5EA51223184D10092050C /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B5EA50223184D10092050C /* Reachability.swift */; };
 		E8B78A0D22300E8F0096F9BE /* ViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B78A0C22300E8F0096F9BE /* ViewControllerTests.swift */; };
 		E8EA2F21222FEE39007E1446 /* APIManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EA2F20222FEE39007E1446 /* APIManagerTests.swift */; };
 		E8F8FF28222E3E8D00B2CE06 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FF27222E3E8D00B2CE06 /* AppDelegate.swift */; };
@@ -44,6 +45,7 @@
 		CB403FE319E0631C202A17CA /* Pods_AcrossGeographyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AcrossGeographyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8928103222FF15500C24245 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8B5EA4C2230F8C10092050C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E8B5EA50223184D10092050C /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		E8B78A0C22300E8F0096F9BE /* ViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTests.swift; sourceTree = "<group>"; };
 		E8EA2F20222FEE39007E1446 /* APIManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManagerTests.swift; sourceTree = "<group>"; };
 		E8F8FF24222E3E8D00B2CE06 /* AcrossGeography.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AcrossGeography.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -196,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				E8F8FF5C222E408600B2CE06 /* APIManager.swift */,
+				E8B5EA50223184D10092050C /* Reachability.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 				E8F8FF99222EBAE100B2CE06 /* ViewModel.swift in Sources */,
 				E8B5EA4D2230F8C10092050C /* Constants.swift in Sources */,
 				E8F8FF9B222EBC8900B2CE06 /* BasicCollectionCell.swift in Sources */,
+				E8B5EA51223184D10092050C /* Reachability.swift in Sources */,
 				E8F8FF28222E3E8D00B2CE06 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

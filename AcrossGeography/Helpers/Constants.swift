@@ -21,4 +21,6 @@ struct Constants {
     static let activityIndicatorHeight = 30
     static let activityIndicatorWidth = 30
     static let placeHolderImage = "placeholder.jpg"
+    static let networkFailureTitle = "Network Failure"
+    static let networkFailureMessage = "Please check your network connection."
 }
