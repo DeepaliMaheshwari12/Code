@@ -43,10 +43,10 @@ class ViewModel {
         var jsonResult = dataModelObject
 
         let itemsNotNil = jsonResult.rows.compactMap { (itemDesc: DataModelInfoDetails) -> DataModelInfoDetails? in
-            if itemDesc.title == nil && itemDesc.description == nil && itemDesc.imageHref == nil {
-                return nil
+            guard itemDesc.title == nil && itemDesc.description == nil && itemDesc.imageHref == nil else {
+                return itemDesc
             }
-            return itemDesc
+            return nil
         }
         jsonResult.rows = itemsNotNil
         return jsonResult

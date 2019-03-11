@@ -13,7 +13,7 @@ struct Constants {
     static let jsonDownloadResponseFile = "facts.json"
     static let jsonFileURL = "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json"
     static let collectionViewCellIdentifier = "customCellIdentifier"
-    static let iPadPadding = 50
+    static let iPadPadding = 30
     static let collectionViewEstimatedSizeHeight = 10
     static let factsTitle = "title"
     static let factsDescription = "description"
@@ -30,5 +30,5 @@ struct CellLayoutsSize {
 
     static let topAnchorConstraint: CGFloat = 10
     static let rightAnchorConstraint: CGFloat = 20
-    static let widthAndHeightAnchorConstraint: CGFloat = 100
+    static let widthAndHeightAnchorConstraint: CGFloat = 250
 }
