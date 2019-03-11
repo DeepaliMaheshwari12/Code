@@ -13,6 +13,8 @@ class ViewModel {
     // MARK: - Properties
     var dataModel: FactsDataModel?
     let cache = NSCache<AnyObject, AnyObject>()
+    weak var datasource: UICollectionViewDataSource!
+    weak var delegate: UICollectionViewDelegate!
     // MARK: - Service Calls
     func fetchData(completion:@escaping (FactsDataModel) -> Void) {
 
@@ -83,5 +85,33 @@ class ViewModel {
         } else {
             return nil
         }
+    }
+    // MARK: - CollectionView Delegate and Datasource Methods
+     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard dataModel != nil else {
+            return 0
+        }
+        return dataModel!.rows.count
+    }
+     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.collectionViewCellIdentifier, for: indexPath) as? FactsBasicCollectionCell
+        let dataToDisplay = cellDataAt(indexPath: indexPath)
+        customCell?.label.text = dataToDisplay.title
+        customCell?.label.font = UIFont(name: "Helvetica-Bold", size: Constants.customCellTextLabelFont)
+        customCell?.detailLabel.text = dataToDisplay.description
+        customCell?.imageView.image = nil
+        if Reachability.isConnectedToNetwork() == true {
+            provideValidURLImage(atIndex: indexPath) { (image) in
+                DispatchQueue.main.async(execute: { () -> Void in
+                    if collectionView.indexPath(for: customCell!)?.row == indexPath.row {
+                        customCell?.imageView.image = image
+                    }
+                })
+            }
+        }
+        return customCell!
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return collectionView.frame.size
     }
 }

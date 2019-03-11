@@ -38,6 +38,8 @@ class FactsCollectionViewController: UICollectionViewController, UICollectionVie
         collectionView?.collectionViewLayout = layout
         // Fetching the data on launch
         viewModel = ViewModel()
+        viewModel.delegate = collectionView.delegate
+        viewModel.datasource = collectionView.dataSource
         fetchDataFromViewModel()
     }
     // MARK: - Fetch Data
@@ -65,31 +67,13 @@ class FactsCollectionViewController: UICollectionViewController, UICollectionVie
     }
     // MARK: - Delegate and Datasource
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let viewDataModelCheck = viewModel, let viewDataModel = viewDataModelCheck.dataModel else {
-            return 0
-        }
-        return viewDataModel.rows.count
+       return viewModel.collectionView(collectionView, numberOfItemsInSection: section)
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.collectionViewCellIdentifier, for: indexPath) as? FactsBasicCollectionCell
-        let dataToDisplay = viewModel.cellDataAt(indexPath: indexPath)
-        customCell?.label.text = dataToDisplay.title
-        customCell?.label.font = UIFont(name: "Helvetica-Bold", size: Constants.customCellTextLabelFont)
-        customCell?.detailLabel.text = dataToDisplay.description
-        customCell?.imageView.image = nil
-        if Reachability.isConnectedToNetwork() == true {
-            viewModel.provideValidURLImage(atIndex: indexPath) { (image) in
-                DispatchQueue.main.async(execute: { () -> Void in
-                    if collectionView.indexPath(for: customCell!)?.row == indexPath.row {
-                        customCell?.imageView.image = image
-                    }
-                })
-            }
-        }
-        return customCell!
+        return viewModel.collectionView(collectionView, cellForItemAt: indexPath)
     }
    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return collectionView.frame.size
+        return viewModel.collectionView(collectionView, layout: collectionViewLayout, sizeForItemAt: indexPath)
     }
     // MARK: - Alert
     func throwAlertMessage() {
@@ -105,20 +89,20 @@ class FactsCollectionViewController: UICollectionViewController, UICollectionVie
 // Extension written to handle orientation issues
 extension FactsCollectionViewController {
     // MARK: - Orientation Methods
-        override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-            super.traitCollectionDidChange(previousTraitCollection)
-            guard
-                let previousTraitCollection = previousTraitCollection,
-                self.traitCollection.verticalSizeClass != previousTraitCollection.verticalSizeClass ||
-                    self.traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass
-                else {
-                    return
-            }
-            DispatchQueue.main.async {
-                self.collectionView?.collectionViewLayout.invalidateLayout()
-                self.collectionView?.reloadData()
-            }
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard
+            let previousTraitCollection = previousTraitCollection,
+            self.traitCollection.verticalSizeClass != previousTraitCollection.verticalSizeClass ||
+                self.traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass
+            else {
+                return
         }
+        DispatchQueue.main.async {
+            self.collectionView?.collectionViewLayout.invalidateLayout()
+            self.collectionView?.reloadData()
+        }
+    }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
