@@ -10,7 +10,6 @@ import UIKit
 
 class FactsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     // MARK: - Properties
-    private let apiManager = APIManager()
     private lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = .blue
@@ -58,7 +57,6 @@ class FactsCollectionViewController: UICollectionViewController, UICollectionVie
         } else {
             self.activityView.stopAnimating()
             throwAlertMessage()
-            self.refreshControl.endRefreshing()
         }
     }
     // MARK: - Set Navigation Bar
@@ -89,18 +87,8 @@ class FactsCollectionViewController: UICollectionViewController, UICollectionVie
                     }
                 })
             }
-        } else {
-            throwAlertMessage()
         }
         return customCell!
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad {
-            let padding: CGFloat =  CGFloat(Float(Constants.iPadPadding))
-            let collectionViewSize = collectionView.frame.size.width - padding
-            return CGSize(width: collectionViewSize/2, height: collectionViewSize/2)
-        }
-        return collectionView.frame.size
     }
     // MARK: - Orientation Methods
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -115,7 +103,9 @@ class FactsCollectionViewController: UICollectionViewController, UICollectionVie
     // MARK: - Alert
     func throwAlertMessage() {
         let alertController = UIAlertController(title: Constants.networkFailureTitle, message: Constants.networkFailureMessage, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: Constants.okMessage, style: .default)
+        let okAction = UIAlertAction(title: Constants.okMessage, style: .default, handler: { _ in
+            self.refreshControl.endRefreshing()
+        })
         alertController.addAction(okAction)
         self.present(alertController, animated: true, completion: nil)
     }
