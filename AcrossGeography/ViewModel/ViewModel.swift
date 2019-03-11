@@ -16,13 +16,11 @@ class ViewModel {
     // MARK: - Service Calls
     func fetchData(completion:@escaping (FactsDataModel) -> Void) {
 
-        APIManager().makeRequest {[weak self] (result, _) in
-
-            guard let jsonResult = result else {
-                return
+        APIManager().makeRequest {[weak self] (result, error) in
+            guard error == nil else {
+             return
             }
-
-            let dataModel = self!.checkForNilObjectInJSON(dataModelObject: jsonResult)
+            let dataModel = self!.checkForNilObjectInJSON(dataModelObject: result!)
             completion(dataModel)
     }
 }

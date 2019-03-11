@@ -15,7 +15,6 @@ class FactsCollectionViewController: UICollectionViewController, UICollectionVie
         refreshControl.tintColor = .blue
         return refreshControl
     }()
-    private var cache: NSCache<AnyObject, AnyObject>!
     var viewModel: ViewModel!
     private var activityView: UIActivityIndicatorView!
     private lazy var layout: UICollectionViewFlowLayout = {
@@ -37,7 +36,6 @@ class FactsCollectionViewController: UICollectionViewController, UICollectionVie
         self.view.addSubview(activityView)
         collectionView.register(FactsBasicCollectionCell.self, forCellWithReuseIdentifier: Constants.collectionViewCellIdentifier)
         collectionView?.collectionViewLayout = layout
-        cache = NSCache()
         // Fetching the data on launch
         viewModel = ViewModel()
         fetchDataFromViewModel()
@@ -90,23 +88,63 @@ class FactsCollectionViewController: UICollectionViewController, UICollectionVie
         }
         return customCell!
     }
-    // MARK: - Orientation Methods
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        layout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: Constants.collectionViewLayoutheight)
-        super.traitCollectionDidChange(previousTraitCollection)
-    }
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        layout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: Constants.collectionViewLayoutheight)
-        layout.invalidateLayout()
-        super.viewWillTransition(to: size, with: coordinator)
+   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return collectionView.frame.size
     }
     // MARK: - Alert
     func throwAlertMessage() {
         let alertController = UIAlertController(title: Constants.networkFailureTitle, message: Constants.networkFailureMessage, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: Constants.okMessage, style: .default, handler: { _ in
+        let okAction = UIAlertAction(title: Constants.okMessage, style: .default, handler: {_ in
             self.refreshControl.endRefreshing()
         })
         alertController.addAction(okAction)
         self.present(alertController, animated: true, completion: nil)
     }
+}
+
+// Extension written to handle orientation issues
+extension FactsCollectionViewController {
+    // MARK: - Orientation Methods
+        override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+            super.traitCollectionDidChange(previousTraitCollection)
+            guard
+                let previousTraitCollection = previousTraitCollection,
+                self.traitCollection.verticalSizeClass != previousTraitCollection.verticalSizeClass ||
+                    self.traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass
+                else {
+                    return
+            }
+            DispatchQueue.main.async {
+                self.collectionView?.collectionViewLayout.invalidateLayout()
+                self.collectionView?.reloadData()
+            }
+        }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        self.collectionView?.collectionViewLayout.invalidateLayout()
+        self.estimateVisibleCellSizes(to: size)
+        coordinator.animate(alongsideTransition: { _ in
+        }, completion: { _ in
+            self.collectionView?.collectionViewLayout.invalidateLayout()
+        })
+    }
+    func preferredWith(forSize size: CGSize) -> CGFloat {
+        let columnFactor: CGFloat = 1.0
+        return (size.width - 30) / columnFactor
+    }
+    func estimateVisibleCellSizes(to size: CGSize) {
+        guard let collectionView = self.collectionView else {
+            return
+        }
+        if let flowLayout = self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.estimatedItemSize = CGSize(width: self.preferredWith(forSize: size), height: 1)
+        }
+        collectionView.visibleCells.forEach({ cell in
+            if let cell = cell as? FactsBasicCollectionCell {
+                cell.setPreferred(width: self.preferredWith(forSize: size))
+            }
+        })
+    }
+
 }

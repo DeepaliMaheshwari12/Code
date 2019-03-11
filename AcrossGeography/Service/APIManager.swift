@@ -37,19 +37,26 @@ class APIManager {
             encoding: JSONEncoding.default,
             headers: nil,
             to: destination).downloadProgress(closure: { _ in
-            }).response(completionHandler: { (_) in
+            }).response(completionHandler: { (response) in
+                if let statusCode = response.response?.statusCode, statusCode == 200 {
                 let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as NSString
                 let plistPath = paths.appendingPathComponent(Constants.jsonDownloadResponseFile)
                     do {
                         let data1 = try Data(contentsOf: URL(fileURLWithPath: plistPath), options: .mappedIfSafe)
                         let string = String(decoding: data1, as: UTF8.self)
-                        let data = string.data(using: .utf8)!
-                        let jsonResult = try JSONDecoder().decode(FactsDataModel.self, from: data)
-                        completion(jsonResult, nil)
+                        if !string.isEmpty {
+                            let data = string.data(using: .utf8)!
+                            let jsonResult = try JSONDecoder().decode(FactsDataModel.self, from: data)
+                            completion(jsonResult, nil)
+                        }
+                        return
                        } catch let error {
                             completion(nil, error)
                     }
-            })
+                }
+                completion(nil, response.error)
+            }
+        )
     }
 
 }
