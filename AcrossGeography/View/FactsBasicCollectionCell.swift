@@ -46,8 +46,6 @@ class FactsBasicCollectionCell: UICollectionViewCell {
     }
     // MARK: - Cell Layout
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-        setNeedsLayout()
-        layoutIfNeeded()
         width.constant = bounds.size.width
         return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1))
     }
