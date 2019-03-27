@@ -25,6 +25,7 @@ class FactsBasicCollectionCell: UICollectionViewCell {
     lazy var detailLabel: UILabel = {
         let detailLabel = UILabel()
         detailLabel.numberOfLines = 0
+        detailLabel.lineBreakMode = .byWordWrapping
         detailLabel.translatesAutoresizingMaskIntoConstraints = false
         return detailLabel
     }()
