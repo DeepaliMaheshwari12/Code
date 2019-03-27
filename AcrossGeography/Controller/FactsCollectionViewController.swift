@@ -91,12 +91,18 @@ extension FactsCollectionViewController {
     // MARK: - Orientation Methods
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
+        guard
+            let previousTraitCollection = previousTraitCollection,
+            self.traitCollection.verticalSizeClass != previousTraitCollection.verticalSizeClass ||
+                self.traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass
+            else {
+                return
+        }
         DispatchQueue.main.async {
             self.collectionView?.collectionViewLayout.invalidateLayout()
             self.collectionView?.reloadData()
         }
     }
-
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         self.estimateVisibleCellSizes(to: size)
@@ -110,9 +116,16 @@ extension FactsCollectionViewController {
         return (size.width - 30) / columnFactor
     }
     func estimateVisibleCellSizes(to size: CGSize) {
+        guard let collectionView = self.collectionView else {
+            return
+        }
         if let flowLayout = self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.estimatedItemSize = CGSize(width: self.preferredWith(forSize: size), height: 1)
         }
+        collectionView.visibleCells.forEach({ cell in
+            if let cell = cell as? FactsBasicCollectionCell {
+                cell.setPreferred(width: self.preferredWith(forSize: size))
+            }
+        })
     }
-
 }
