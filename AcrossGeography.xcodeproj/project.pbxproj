@@ -17,7 +17,6 @@
 		E8F8FF2A222E3E8D00B2CE06 /* FactsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FF29222E3E8D00B2CE06 /* FactsCollectionViewController.swift */; };
 		E8F8FF2F222E3E8F00B2CE06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8F8FF2E222E3E8F00B2CE06 /* Assets.xcassets */; };
 		E8F8FF32222E3E8F00B2CE06 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8F8FF30222E3E8F00B2CE06 /* LaunchScreen.storyboard */; };
-		E8F8FF3D222E3E8F00B2CE06 /* AcrossGeographyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FF3C222E3E8F00B2CE06 /* AcrossGeographyTests.swift */; };
 		E8F8FF5B222E3F2500B2CE06 /* FactsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FF5A222E3F2500B2CE06 /* FactsDataModel.swift */; };
 		E8F8FF5D222E408600B2CE06 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FF5C222E408600B2CE06 /* APIManager.swift */; };
 		E8F8FF99222EBAE100B2CE06 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8FF98222EBAE100B2CE06 /* ViewModel.swift */; };
@@ -55,7 +54,6 @@
 		E8F8FF31222E3E8F00B2CE06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E8F8FF33222E3E8F00B2CE06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8F8FF38222E3E8F00B2CE06 /* AcrossGeographyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AcrossGeographyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E8F8FF3C222E3E8F00B2CE06 /* AcrossGeographyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcrossGeographyTests.swift; sourceTree = "<group>"; };
 		E8F8FF5A222E3F2500B2CE06 /* FactsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsDataModel.swift; sourceTree = "<group>"; };
 		E8F8FF5C222E408600B2CE06 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		E8F8FF98222EBAE100B2CE06 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
@@ -154,7 +152,6 @@
 			children = (
 				E8928103222FF15500C24245 /* Info.plist */,
 				E8EA2F20222FEE39007E1446 /* APIManagerTests.swift */,
-				E8F8FF3C222E3E8F00B2CE06 /* AcrossGeographyTests.swift */,
 				E8F8FF9F222F093D00B2CE06 /* DataModelTests.swift */,
 				E8F8FFA3222F5BAF00B2CE06 /* ViewModelTests.swift */,
 				E8B78A0C22300E8F0096F9BE /* ViewControllerTests.swift */,
@@ -430,7 +427,6 @@
 			files = (
 				E8EA2F21222FEE39007E1446 /* APIManagerTests.swift in Sources */,
 				E8F8FFA4222F5BAF00B2CE06 /* ViewModelTests.swift in Sources */,
-				E8F8FF3D222E3E8F00B2CE06 /* AcrossGeographyTests.swift in Sources */,
 				E8F8FFA0222F093D00B2CE06 /* DataModelTests.swift in Sources */,
 				E8B78A0D22300E8F0096F9BE /* ViewControllerTests.swift in Sources */,
 			);
