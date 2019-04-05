@@ -23,9 +23,9 @@ struct Constants {
     static let collectionViewLayoutheight: CGFloat = 10.0
     static let customCellTextLabelFont: CGFloat = 16
     static let okMessage = "OK"
-    static let okMessage1 = "OK"
-    static let okMessage2 = "OK"
-    static let okMessage3 = "OK"
+    static let customCellTextLabelFont1 = "OK"
+    static let customCellTextLabelFont2 = "OK"
+    static let customCellTextLabelFont3 = "OK"
 }
 
 struct CellLayoutsSize {
